@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabel Surat-Surat</title>
+    <link href='https://fonts.googleapis.com/css?family=Rubik' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+    <link rel="icon" href="/ajax/images/quran.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato';
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #000000;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100vw;
+            padding: 0px 110px 110px 110px;
+            background: #000000;
+            color: #000000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        thead th {
+            padding: 20px 5px;
+            border: 2px solid #034A10;
+            background: #ffffff;
+            border-radius: 4px;
+        }
+
+        .title-juz {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 10vh;
+            background: #034A10;
+            
+        }
+
+        .title-juz h1 {
+            color: #ffffff;
+        }
+
+        .row {
+            text-align: center;
+        }
+
+        .tableIsi {
+            padding: 5px;
+            background: #ffffff;
+            border: 1px solid #034A10;
+        }
+
+        .tableRecite {
+            padding: 3px;
+            background: #000000;
+            border-radius: 10000px;
+        }
+
+        .back-button a {
+            padding: 20px;
+            text-decoration: none;
+            color: #fff;
+            position: fixed;
+            top: 10px;
+            left: 20px;
+            background: #034A10;
+            border-radius: 50%;
+        }
+
+        .back-button a:hover {
+            background: #034A1099;
+        }
+        
+        footer {
+            background: #034A10;
+            color: #ffffff;
+            height: 5vh;
+            width: 100%;
+            padding: 10px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title-juz">
+            <h1>Table 30 Juz</h1>
+        </div>
+        <div class="back-button">
+            <a href="home-challenge.html">Back</a>
+        </div>
+        <table>
+            <thead>
+                <th>Nama Surah</th>
+                <th>Arti Nama Surah</th>
+                <th>Jumlah Ayat</th>
+                <th>Nomor Surah</th>
+                <th>Tempat Diturunkannya</th>
+                <th>Audio Bacaan</th>
+                <th>Tipe Surah</th>
+            </thead>
+            <tbody id="list-data">
+
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>Al-Quran Web created by Vallian</p>
+    </footer>
+
+    <script>
+        // Ini adalah Challenge dari kak Fahmi
+
+        const api = 'https://raw.githubusercontent.com/penggguna/QuranJSON/master/quran.json'
+        const listData = document.getElementById('list-data');
+
+        fetch(api).then(response => response.json()).then((data => {
+
+            data.forEach(el => {
+                const row = document.createElement('tr');
+                row.classList.add('row')
+
+                const nama = document.createElement('td');
+                nama.textContent = el.name
+                nama.classList.add('tableIsi')
+
+                const banyakarti = el.name_translations
+                const tigaarti = banyakarti.id
+                const arti = document.createElement('td');
+                arti.textContent = tigaarti
+                arti.classList.add('tableIsi')
+
+                const numJumlah = document.createElement('td');
+                numJumlah.textContent = el.number_of_ayah
+                numJumlah.classList.add('tableIsi')
+
+                const numSurah = document.createElement('td');
+                numSurah.textContent = el.number_of_surah
+                numSurah.classList.add('tableIsi')
+
+                const tempat = document.createElement('td');
+                tempat.textContent = el.place
+                tempat.classList.add('tableIsi')
+
+                const tdRecite = document.createElement('td');
+                tdRecite.classList.add('tableIsi')
+                const recitation = document.createElement('audio');
+                recitation.src = el.recitation
+                recitation.controls = true
+                recitation.loop = true
+                recitation.classList.add('tableRecite')
+
+                const type = document.createElement('td');
+                type.textContent = el.type
+                type.classList.add('tableIsi')
+
+                listData.appendChild(row);
+                row.appendChild(nama);
+                row.appendChild(arti);
+                row.appendChild(numJumlah);
+                row.appendChild(numSurah);
+                row.appendChild(tempat);
+                row.appendChild(tdRecite);
+                tdRecite.appendChild(recitation);
+                row.appendChild(type);
+            });
+        }))
+    </script>
+
+</body>
+
+</html>
